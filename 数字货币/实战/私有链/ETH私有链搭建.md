@@ -1,14 +1,10 @@
-# ETH 私有链搭建教程
+# 搭建以太坊私有链
 ## 安装 go-ethereum 客户端
 
     brew tap ethereum/ethereum
     brew install ethereum
 ## 检查安装是否成功：
-
     geth --help
-
-
-
 # geth --datadir node1 account new
     INFO [03-20|13:41:18.527] Maximum peer count                       ETH=50 total=50
     Your new account is locked with a password. Please give a password. Do not forget this password.
@@ -24,7 +20,6 @@
     - You must NEVER share the secret key with anyone! The key controls access to your funds!
     - You must BACKUP your key file! Without the key, it's impossible to access account funds!
     - You must REMEMBER your password! Without the password, it's impossible to decrypt the key!
-
 
 # geth --datadir node2 account new
     INFO [03-20|13:42:27.032] Maximum peer count                       ETH=50 total=50
@@ -119,7 +114,6 @@
 
     bootnode -genkey boot.key
 
-
 # bootnode -nodekey boot.key -addr :30305
 
     enode://7cb551b5d90f6056ae77761c38fc575dbb21400e64c8837657a97eda0d7e0d5e4db2908b611855ab886e1f2403ed13009640a24f93028c1963910b7c234086db@127.0.0.1:0?discport=30305
@@ -128,29 +122,26 @@
     INFO [03-20|13:52:13.449] New local node record                    seq=1,710,913,933,447 id=b1804bb47d037d2f ip=<nil> udp=0 tcp=0
 
 
-
-geth --datadir node1 --port 30306 --bootnodes "enode://7cb551b5d90f6056ae77761c38fc575dbb21400e64c8837657a97eda0d7e0d5e4db2908b611855ab886e1f2403ed13009640a24f93028c1963910b7c234086db@127.0.0.1:0?discport=30305"  --networkid 12345 --unlock 0xcA8C3fb5D8B94b36E1dA447C932BcD6B1B6480d8 --password node1/password.txt --authrpc.port 8551 --mine --miner.etherbase 0xcA8C3fb5D8B94b36E1dA447C932BcD6B1B6480d8
-
-geth --datadir node2 --port 30307 --bootnodes "enode://7cb551b5d90f6056ae77761c38fc575dbb21400e64c8837657a97eda0d7e0d5e4db2908b611855ab886e1f2403ed13009640a24f93028c1963910b7c234086db@127.0.0.1:0?discport=30305"  --networkid 12345 --unlock 0xc11442C38740D5dDFdD3d6148c2c4232BAa6d8b0 --password node2/password.txt --authrpc.port 8552
-
-
-
-geth attach node1/geth.ipc
+# node1
+    geth --datadir node1 --port 30306 --bootnodes "enode://7cb551b5d90f6056ae77761c38fc575dbb21400e64c8837657a97eda0d7e0d5e4db2908b611855ab886e1f2403ed13009640a24f93028c1963910b7c234086db@127.0.0.1:0?discport=30305"  --networkid 12345 --unlock 0xcA8C3fb5D8B94b36E1dA447C932BcD6B1B6480d8 --password node1/password.txt --authrpc.port 8551 --mine --miner.etherbase 0xcA8C3fb5D8B94b36E1dA447C932BcD6B1B6480d8
+# node2
+    geth --datadir node2 --port 30307 --bootnodes "enode://7cb551b5d90f6056ae77761c38fc575dbb21400e64c8837657a97eda0d7e0d5e4db2908b611855ab886e1f2403ed13009640a24f93028c1963910b7c234086db@127.0.0.1:0?discport=30305"  --networkid 12345 --unlock 0xc11442C38740D5dDFdD3d6148c2c4232BAa6d8b0 --password node2/password.txt --authrpc.port 8552
 
 
-geth attach node2/geth.ipc
+# attach a Javascript console to either node1
+    geth attach node1/geth.ipc
+    net.peerCount
+    admin.peers
+    eth.getBalance(eth.accounts[0])
+    eth.sendTransaction({
+      to: '0xc11442C38740D5dDFdD3d6148c2c4232BAa6d8b0',
+      from: eth.accounts[0],
+      value: 1000000
+    });
+    eth.getBalance('0xc11442C38740D5dDFdD3d6148c2c4232BAa6d8b0');
 
-eth.getBalance(eth.accounts[0])
-
-
-eth.sendTransaction({
-  to: '0xc11442C38740D5dDFdD3d6148c2c4232BAa6d8b0',
-  from: eth.accounts[0],
-  value: 1000000
-});
-
-
-
+# attach a Javascript console to either node2
+  geth attach node2/geth.ipc
 
 ## 目录说明：
   keystore 用来保存账户信息
@@ -160,8 +151,8 @@ eth.sendTransaction({
     networkid 为上面的 genesis.json 配置的 id，以太坊主网 id 为 1
     2>geth.log 这里的 2 是代表 stderr，这里是为了让私链的以太坊日志独立输出，防止影响命令行交互的显示
 ## 参考
-Private Networks
+### Private Networks
 https://geth.ethereum.org/docs/fundamentals/private-network
-JavaScript Console
+### JavaScript Console
 https://geth.ethereum.org/docs/interacting-with-geth/javascript-console
 
