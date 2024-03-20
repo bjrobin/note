@@ -1,0 +1,1 @@
+clique目录下的代码实现的是PoA(权威证明，Proof of Authority)共识
