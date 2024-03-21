@@ -123,7 +123,9 @@
 
 
 # node1
-    geth --datadir node1 --port 30306 --bootnodes "enode://7cb551b5d90f6056ae77761c38fc575dbb21400e64c8837657a97eda0d7e0d5e4db2908b611855ab886e1f2403ed13009640a24f93028c1963910b7c234086db@127.0.0.1:0?discport=30305"  --networkid 12345 --unlock 0xcA8C3fb5D8B94b36E1dA447C932BcD6B1B6480d8 --password node1/password.txt --authrpc.port 8551 --mine --miner.etherbase 0xcA8C3fb5D8B94b36E1dA447C932BcD6B1B6480d8
+```
+geth --datadir node1 --port 30306 --bootnodes "enode://7cb551b5d90f6056ae77761c38fc575dbb21400e64c8837657a97eda0d7e0d5e4db2908b611855ab886e1f2403ed13009640a24f93028c1963910b7c234086db@127.0.0.1:0?discport=30305"  --networkid 12345 --unlock 0xcA8C3fb5D8B94b36E1dA447C932BcD6B1B6480d8 --password node1/password.txt --allow-insecure-unlock --http --http.port 8545 --http.api 'web3,eth,net,debug,personal' --http.corsdomain '*' --authrpc.port 8551 --mine --miner.etherbase 0xcA8C3fb5D8B94b36E1dA447C932BcD6B1B6480d8
+```
 # node2
     geth --datadir node2 --port 30307 --bootnodes "enode://7cb551b5d90f6056ae77761c38fc575dbb21400e64c8837657a97eda0d7e0d5e4db2908b611855ab886e1f2403ed13009640a24f93028c1963910b7c234086db@127.0.0.1:0?discport=30305"  --networkid 12345 --unlock 0xc11442C38740D5dDFdD3d6148c2c4232BAa6d8b0 --password node2/password.txt --authrpc.port 8552
 
