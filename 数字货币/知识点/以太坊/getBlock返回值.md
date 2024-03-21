@@ -1,0 +1,52 @@
+```javascript
+
+{
+  difficulty: 2n,
+  extraData: '0xd983010d0e846765746888676f312e32322e308664617277696e00000000000021b048fa0fe36cfd156e5e6d9dae85bd8b8abc55d2d0a8e5ec4489c31fbdb4401bd25fa633c43d48f393f08e4a401a147eb2abbf79fc688aa7f627e589828c8601',
+  gasLimit: 30000000n,
+  gasUsed: 0n,
+  hash: '0x241dc939a68fa2de094b3434c1d17d2c0f4ca18cc6b0811b8181c50e5486a782',
+  logsBloom: '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+  miner: '0x0000000000000000000000000000000000000000',
+  mixHash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  nonce: 0n,
+  number: 5514n,
+  parentHash: '0xe95d493ae297875be08f2c47a1d8979eefaba540e07066934b93d4595a3392db',
+  receiptsRoot: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421',
+  sha3Uncles: '0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347',
+  size: 609n,
+  stateRoot: '0x66fca496f15be325ca384b374e3fc345005d18a8105e1262ab912565f453953e',
+  timestamp: 1711003572n,
+  totalDifficulty: 11029n,
+  transactionsRoot: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421',
+  uncles: []
+}
+```
+以太坊交易处理到区块中。 在现已弃用的工作量证明以太坊中，每个区块包含：
+区块的难度，例如：3,324,092,183,262,715
+混合哈希（mixHash），例如：0x44bca881b07a6a09f83b130798072441705d9a665c5ac8bdf2f39a3cdf3bee29
+nonce--例如：0xd3ee432b4fb3d26b
+
+```javascript
+{
+  difficulty: - String: 该区块难度值。
+  extraData: - String: 区块补充数据字段。
+  gasLimit: - Number: 该区块允许的最大 gas 消耗量。
+  gasUsed: - Number: 该区块所有交易所消耗的 gas 总量。
+  hash: 32 字节 - String: Hash of the block. 打包中的区块其值为 null。
+  logsBloom: 256 Bytes - String: 区块日志的布隆过滤器。打包中的区块其值为 null。
+  miner: - String: 获得挖矿奖励的受益人地址。
+  mixHash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  nonce: 0n,
+  number: 5514n,
+  parentHash: 32 字节 - String: 父区块哈希值。
+  receiptsRoot: : DATA, 32 Bytes - the root of the receipts trie of the block.DATA，32 字节 - 区块收据树的根。
+  sha3Uncles: 32 字节 - String: 区块中叔块数据的 SHA3 哈希值。
+  size: - Number: 该区块的字节数大小。
+  stateRoot: 32 字节 - String: 区块中状态 trie 树的根哈希。
+  timestamp: - Number: 区块生成时的时间戳。
+  totalDifficulty: - String: 到此区块为止链的总难度值。
+  transactionsRoot: 32 字节 - String: 区块中交易 trie 树的根哈希。
+  uncles: - Array: 叔块哈希数组。
+}
+```

@@ -11,7 +11,15 @@ const web3 = new Web3(rpcURL);
 
 // 获取区块链的信息
 web3.eth.getBlockNumber().then(console.log);
-
+// web3.eth.getBlockNumber(function (error, result) {
+//     console.log(result)
+// })
+// You can also use await/async function calls to avoid nesting callbacks in your code:
+async function getBlockNumber2() {
+    const latestBlockNumber = await web3.eth.getBlockNumber()
+    console.log(latestBlockNumber)
+    return latestBlockNumber
+}
 // web3.eth.getBlock(0).then(console.log);
 // console.log("-----------------------------------")
 // web3.eth.getBlock("latest").then(console.log);
@@ -80,3 +88,4 @@ function getBalance (address: any) {
 }
 var addressList=[] as any[];
 getBlockNumber();
+web3.eth.getBlock("latest").then(console.log);
