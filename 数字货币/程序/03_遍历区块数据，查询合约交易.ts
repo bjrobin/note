@@ -4,7 +4,7 @@ var moment = require('moment');
 var web3: any = null
 // web3 = new Web3.providers.HttpProvider(INFURA_URL_TESTNET);
 // npm install --save dotenv 
-// 在Finder里面直接按 ⌘⇧. （Cmd+Shift+.）即可切换隐藏文件显示与隐藏。
+// 在Finder里面直接按Cmd+Shift+.即可切换隐藏文件显示与隐藏
 require('dotenv').config({path: '/data/.env'})
   
 const INFURA_URL_TESTNET = process.env.INFURA_URL_TESTNET
@@ -26,11 +26,11 @@ async function connectWeb3() {
     console.log('web3 has connected successfully.');
 }
 // Part Functions
-async function checkIfIsContract(j: number,newAddress: string) {
+async function checkIfIsContract(j: number,newAddress: string,transactionInput: string) {
     // console.log('newAddress.' + newAddress);
     if(newAddress == null){
-        console.log('=========='+j+'=================================================================');
-        console.log('不是合约 null');
+        // console.log('=========='+j+'=================================================================');
+        // console.log('不是合约 null');
        
         return false;
     }
@@ -38,22 +38,23 @@ async function checkIfIsContract(j: number,newAddress: string) {
     // console.log(" ** CODE ** " + code);
     if(code == '0x') {
         // console.log('=========='+j+'=================================================================');
-        console.log('不是合约 NOT CONTRACT');
-        _contract_0x++;
+        // console.log('不是合约 NOT CONTRACT');
+        // _contract_0x++;
         return false;
     } else {
-        console.log('是合约 CONTRACT');
-        _contract_num++;
+        // console.log('是合约 CONTRACT');
+        // _contract_num++;
+        console.log(transactionInput.slice(0,10))
         return true
     };
 }
-async function uniqueAddAddress(j: number ,newAddress:string,transactionInput: string) {
+// async function uniqueAddAddress(j: number ,newAddress:string,transactionInput: string) {
     
     // console.log('newAddress.' + newAddress+' transactionInput.' + transactionInput);
-    let result = await checkIfIsContract(j,newAddress);
+    // let result = await checkIfIsContract(j,newAddress);
     // console.log('result.' + result);
 
-}
+// }
 async function scanTheChain() {
     for(let i = startBlock; i <= endBlock; i++) {
         console.log('scanning the chain.');
@@ -64,15 +65,20 @@ async function scanTheChain() {
         var blockTxes = blockInfo.transactions;
         // console.log('blockTxes.' + blockTxes);
         var blockTxCnt = await web3.eth.getBlockTransactionCount(i);
-        console.log("CNT => " + blockTxCnt)
+        
+        console.log("transactions => " + blockTxCnt)
         console.log('===========================================================================');
         for(let j = 0; j < blockTxCnt; j++) {
-            // console.log('===========================================================================');
+            console.log('===========================================================================');
             var thisTx = await web3.eth.getTransaction(blockTxes[j]);
-            const txFrom = thisTx.from;
-            await uniqueAddAddress(j,txFrom,thisTx.input);
-            const txTo = thisTx.to;
-            await uniqueAddAddress(j,txTo,thisTx.input);
+            var txFrom = thisTx.from;
+            var txTo = thisTx.to;
+            var codeFrom = await web3.eth.getCode(txFrom);
+            var codeTo = await web3.eth.getCode(txTo);
+            // if (txFrom == null  || txTo == null) {
+            //     console.log(txFrom,txTo);
+            // }
+            console.log(txFrom,codeFrom.slice(0,10),txTo,codeTo.slice(0,10),thisTx.input.slice(0,10));
         }
         console.log("Contract Number: " + _contract_num);
         console.log("Not Contract Number: " + _contract_0x);
