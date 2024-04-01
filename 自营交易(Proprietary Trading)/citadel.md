@@ -1,0 +1,1 @@
+Citadel是一家全球性的金融机构，由Kenneth C. Griffin于1990年创立。它主要包含两个业务部门：Citadel和Citadel Securities。Citadel是世界上最大的替代资产管理公司之一，管理着包括股票、固定收益、商品和量化策略在内的多种策略资产。而Citadel Securities是世界领先的市场做市商之一，为股票和固定收益市场等提供流动性，帮助零售和机构客户执行交易。Citadel以其使用先进技术和算法进行高频交易和市场做市策略而闻名。
