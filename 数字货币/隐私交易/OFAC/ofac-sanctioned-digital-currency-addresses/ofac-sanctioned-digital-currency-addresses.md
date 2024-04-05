@@ -1,0 +1,1 @@
+https://github.com/0xB10C/ofac-sanctioned-digital-currency-addresses
