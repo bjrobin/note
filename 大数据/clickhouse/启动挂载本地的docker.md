@@ -39,6 +39,7 @@
     ClickHouse表引擎到底怎么选
     https://developer.aliyun.com/article/762461
 
+# address
 ```sql
 CREATE TABLE address(
 height Int32 ,
@@ -50,6 +51,46 @@ PARTITION BY height
 ORDER BY (height,address)
 SETTINGS index_granularity=8192
 ```
+# address_all
+```sql
+CREATE TABLE address_all(
+height Int32 ,
+address String ,
+p_address String ,
+)
+ENGINE = MergeTree()
+PARTITION BY height
+ORDER BY (height,address)
+SETTINGS index_granularity=8192
+
+select count(*) from btc.address_all
+```
+# transaction_origin
+
+```sql
+CREATE TABLE transaction_origin(
+address String
+)
+ENGINE = MergeTree()
+ORDER BY (address)
+SETTINGS index_granularity=8192
+
+select * from transaction_origin
+```
+
+# address_in address_out
+
+```sql
+CREATE TABLE address_out(
+height Int32 ,
+address String
+)
+ENGINE = MergeTree()
+ORDER BY (height,address)
+SETTINGS index_granularity=8192
+```
+
+
 # 参考
     docker 安装clickhouse 部署本地
     https://blog.csdn.net/tankpanv/article/details/121490107
