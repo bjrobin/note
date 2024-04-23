@@ -53,7 +53,7 @@ SETTINGS index_granularity=8192
 ```
 # address_all
 ```sql
-CREATE TABLE address_all(
+CREATE TABLE btc.address_all(
 height Int32 ,
 address String ,
 p_address String ,
