@@ -239,7 +239,7 @@ ln -s /soft/Python-3.12.3/python3/bin/pip3 /usr/bin/pip3
 ------------------------------------------
 https://blog.csdn.net/Skywin88/article/details/130519825
 #/bin/bash
-# 安装版本
+安装版本
 version=3.11.0
 
 yum install -y wget
@@ -302,3 +302,60 @@ pip3.12 install psutil
 pip3.12 install clickhouse-driver
 pip3.12 install pandas
 pip3.12 install bitcoinrpc
+
+
+
+# 大于100000个分区
+    <merge_tree>
+        <max_parts_in_total>1000000</max_parts_in_total>
+    </merge_tree>
+# 后台运行
+sudo -i
+cd /data/script
+python3.12 01.py
+nohup python3.12 01.py
+nohup python3.12 -u 01.py > test.log 2>&1 &
+nohup python3.12 01.py > test.log 2>&1 &
+ 
+
+*含义解释：
+nohup  不挂起的意思
+python  test.py   python运行test.py文件
+
+-u     代表程序不启用缓存，也就是把输出直接放到log中，没这个参数的话，log文件的生成会有延迟
+
+> test.log  将输出日志保存到这个log中
+
+2>1        2与>结合代表错误重定向，而1则代表错误重定向到一个文件1，而不代表标准输出； 
+2>&1      换成2>&1，&与1结合就代表标准输出了，就变成错误重定向到标准输出.
+
+&         最后一个& ，代表该命令在后台执行
+
+*命令运行后会有提示，示例：
+[1]   2880
+
+代表进程2880中运行。
+
+*查看nohub命令下运行的所有后台进程：
+jobs
+*查看后台运行的所有进程：
+ps -aux
+
+*查看后台运行的所有python 进程：
+ps aux |grep python
+或者
+
+ps -ef | grep python
+
+ 
+
+*删除进程
+kill -9  [进程id]
+
+-9  的意思是强制删除
+
+
+# 查看入库进度
+sudo -i
+clickhouse-client
+select max(height) from btc.address_all
