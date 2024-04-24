@@ -90,6 +90,16 @@ ORDER BY (height,address)
 SETTINGS index_granularity=8192
 ```
 
+```sql
+CREATE TABLE btc.transaction_address(
+height Int32 ,
+address String,
+p_address String
+)
+ENGINE = MergeTree()
+ORDER BY (height,address)
+SETTINGS index_granularity=8192
+```
 
 # 参考
     docker 安装clickhouse 部署本地
