@@ -12,17 +12,17 @@ import json
 client = Tron(conf={'timeout': 20.0})  # The default provider, mainnet
 # client = Tron(network="nile")
 time.sleep(1)
-balance = client.get_account_balance(str('TW3NSuhT68vXKdamU7Rkq6sfEVCFwoDfGb'))
-print (balance)
-print ('-----------------')
-time.sleep(1)
+
 # Getting Blockchain Info
 def write_json(data, filename='get_block.json'):
     logfile1=open(filename,mode='w')
     logfile1.write(data)
     logfile1.flush()
     logfile1.close()
-# print (client.get_block())
-write_json(json.dumps(client.get_block()))
+
+def main():
+    write_json(json.dumps(client.get_block(60836289)), 'get_block_60836289.json')
+if __name__ == '__main__':
+    main()
 
 
