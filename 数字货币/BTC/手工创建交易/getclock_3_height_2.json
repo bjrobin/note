@@ -1,0 +1,64 @@
+{
+  "hash": "71144bceb7d339d782dda2ab7d13df630e399cb31a4b6d18f4be474d9cacd4c5",
+  "confirmations": 100,
+  "height": 2,
+  "version": 536870912,
+  "versionHex": "20000000",
+  "merkleroot": "029ab395bf84eb185725301e9813f40e76d7299206ed759c6240518735009781",
+  "time": 1714474027,
+  "mediantime": 1714474026,
+  "nonce": 1,
+  "bits": "207fffff",
+  "difficulty": 4.656542373906925e-10,
+  "chainwork": "0000000000000000000000000000000000000000000000000000000000000006",
+  "nTx": 1,
+  "previousblockhash": "3aa6bdbd800309fb4bd423375fb7bc51d3d6f07c126ca26061406a46f22f4ed1",
+  "nextblockhash": "32fd2ce1aa9a1368e6e39f24f87c10324a4f91a83c4e901c6cb8ec39592d03ae",
+  "strippedsize": 212,
+  "size": 248,
+  "weight": 884,
+  "tx": [
+    {
+      "txid": "029ab395bf84eb185725301e9813f40e76d7299206ed759c6240518735009781",
+      "hash": "4c9f3876c9eb9eec565a459396d5af282544f068c42d6b583a13b83c9b44508b",
+      "version": 2,
+      "size": 167,
+      "vsize": 140,
+      "weight": 560,
+      "locktime": 0,
+      "vin": [
+        {
+          "coinbase": "5200",
+          "txinwitness": [
+            "0000000000000000000000000000000000000000000000000000000000000000"
+          ],
+          "sequence": 4294967295
+        }
+      ],
+      "vout": [
+        {
+          "value": 50.00000000,
+          "n": 0,
+          "scriptPubKey": {
+            "asm": "0 907ee8b73f268afa5fccabeaaf17c3d49b3559a3",
+            "desc": "addr(bcrt1qjplw3dely6905h7v4042797r6jdn2kdr2l6zjc)#2uhw2ap7",
+            "hex": "0014907ee8b73f268afa5fccabeaaf17c3d49b3559a3",
+            "address": "bcrt1qjplw3dely6905h7v4042797r6jdn2kdr2l6zjc",
+            "type": "witness_v0_keyhash"
+          }
+        },
+        {
+          "value": 0.00000000,
+          "n": 1,
+          "scriptPubKey": {
+            "asm": "OP_RETURN aa21a9ede2f61c3f71d1defd3fa999dfa36953755c690689799962b48bebd836974e8cf9",
+            "desc": "raw(6a24aa21a9ede2f61c3f71d1defd3fa999dfa36953755c690689799962b48bebd836974e8cf9)#cav96mf3",
+            "hex": "6a24aa21a9ede2f61c3f71d1defd3fa999dfa36953755c690689799962b48bebd836974e8cf9",
+            "type": "nulldata"
+          }
+        }
+      ],
+      "hex": "020000000001010000000000000000000000000000000000000000000000000000000000000000ffffffff025200ffffffff0200f2052a01000000160014907ee8b73f268afa5fccabeaaf17c3d49b3559a30000000000000000266a24aa21a9ede2f61c3f71d1defd3fa999dfa36953755c690689799962b48bebd836974e8cf90120000000000000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ]
+}
