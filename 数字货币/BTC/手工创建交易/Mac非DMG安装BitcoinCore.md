@@ -586,7 +586,7 @@ bitcoin-cli getblock 3aa6bdbd800309fb4bd423375fb7bc51d3d6f07c126ca26061406a46f22
 
 # 挖矿
     再执行一次挖矿操作
-  bitcoin-cli -rpcwallet=walletname0430 -generate 1
+    bitcoin-cli -rpcwallet=walletname0430 -generate 1
 ```json
 {
   "address": "bcrt1qdlss0v7gg7xs0wuvtnqkwtyz6xlp0d86f2pv0x",
@@ -596,10 +596,184 @@ bitcoin-cli getblock 3aa6bdbd800309fb4bd423375fb7bc51d3d6f07c126ca26061406a46f22
 }
 ```
 # 挖矿
-bitcoin-cli -rpcwallet=walletname0430 -generate 200
-bitcoin-cli -rpcwallet=walletname0430 listunspent
-bitcoin-cli -rpcwallet=walletname0430 getbalance
-8765.00000000
-bitcoin-cli -rpcwallet=walletname0430 -generate 200
-bitcoin-cli -rpcwallet=walletname0430 getbalance
-12477.50000000
+    bitcoin-cli -rpcwallet=walletname0430 -generate 200
+    bitcoin-cli -rpcwallet=walletname0430 listunspent
+    bitcoin-cli -rpcwallet=walletname0430 getbalance
+    8765.00000000
+    bitcoin-cli -rpcwallet=walletname0430 -generate 200
+    bitcoin-cli -rpcwallet=walletname0430 getbalance
+    12477.50000000
+# 试验手动创建交易、手动签名并发布到网络
+# 创建3个新的地址
+    bitcoin-cli loadwallet walletname0430
+    bitcoin-cli -rpcwallet=walletname0430 getnewaddress
+    bcrt1q64997pd2rv0ehkqn747pfesfwukcxsehyj4e26
+    bitcoin-cli -rpcwallet=walletname0430 getnewaddress
+    bcrt1q6y5jgwddn2kazqx3m0zwv3kstmtuc3vhj7eeec
+    bitcoin-cli -rpcwallet=walletname0430 getnewaddress
+    bcrt1qy3f4lwqx46z89ya9m2pzh77czn6vjagvwdkjc8
+# 给每个地址分别转4、2.9、0.0912334个比特币
+```json
+bitcoin-cli createrawtransaction '''
+[
+  {
+    "txid": "b946c3ddf7f59e06c6bb4431a9502a38822d4213ad85e9fa8889f4228e7316b0",
+    "vout": 0
+  }
+]
+''' '''
+{
+  "bcrt1q64997pd2rv0ehkqn747pfesfwukcxsehyj4e26": 4,
+  "bcrt1q6y5jgwddn2kazqx3m0zwv3kstmtuc3vhj7eeec": 2.9,
+  "bcrt1qy3f4lwqx46z89ya9m2pzh77czn6vjagvwdkjc8": 0.091234
+}'''
+```
+返回：
+    0200000001b016738e22f48988fae985ad13422d82382a50a93144bbc6069ef5f7ddc346b90000000000fdffffff030084d71700000000160014d54a5f05aa1b1f9bd813f57c14e609772d834337800c491100000000160014d1292439ad9aadd100d1dbc4e646d05ed7cc459748368b000000000016001424535fb806ae847293a5da822bfbd814f4c9750c00000000
+# 执行签名指令signrawtransactionwithwallet
+bitcoin-cli -rpcwallet=walletname0430 signrawtransactionwithwallet 0200000001b016738e22f48988fae985ad13422d82382a50a93144bbc6069ef5f7ddc346b90000000000fdffffff030084d71700000000160014d54a5f05aa1b1f9bd813f57c14e609772d834337800c491100000000160014d1292439ad9aadd100d1dbc4e646d05ed7cc459748368b000000000016001424535fb806ae847293a5da822bfbd814f4c9750c00000000
+{
+  "hex": "02000000000101b016738e22f48988fae985ad13422d82382a50a93144bbc6069ef5f7ddc346b90000000000fdffffff030084d71700000000160014d54a5f05aa1b1f9bd813f57c14e609772d834337800c491100000000160014d1292439ad9aadd100d1dbc4e646d05ed7cc459748368b000000000016001424535fb806ae847293a5da822bfbd814f4c9750c02473044022062bc00a2b5a1d27b322cc9cfa03f54473ef7b2e9c5492d6cc63e475c172c264c0220164afc778c30a5c60ee4546c23ee882aa4fc31ff7bc937c271f2e7d3c12704e5012103924e3bdc1acd839de687093794c36454396fdd4e70a50c2e32dc005a4f61e7ff00000000",
+  "complete": true
+}
+# 最后使用指令sendrawtransaction发布到网络节点
+    bitcoin-cli sendrawtransaction 02000000000101b016738e22f48988fae985ad13422d82382a50a93144bbc6069ef5f7ddc346b90000000000fdffffff030084d71700000000160014d54a5f05aa1b1f9bd813f57c14e609772d834337800c491100000000160014d1292439ad9aadd100d1dbc4e646d05ed7cc459748368b000000000016001424535fb806ae847293a5da822bfbd814f4c9750c02473044022062bc00a2b5a1d27b322cc9cfa03f54473ef7b2e9c5492d6cc63e475c172c264c0220164afc778c30a5c60ee4546c23ee882aa4fc31ff7bc937c271f2e7d3c12704e5012103924e3bdc1acd839de687093794c36454396fdd4e70a50c2e32dc005a4f61e7ff00000000
+    返回
+    error code: -25
+    error message:
+    Fee exceeds maximum configured by user (e.g. -maxtxfee, maxfeerate)
+
+# 尝试
+-maxtxfee （默认为0.1btc）
+请留意，feeRate参数是以每1,000 vbyte的BTC指定的，而不是以每vbyte的satoshi指定的。
+bitcoind -maxtxfee=10
+Bitcoin Core starting
+lhqer@7RP-OFFB-Lhqer ~ % bitcoin-cli -regtest loadwallet walletname0430
+{
+  "name": "walletname0430",
+  "warnings": [
+    "-maxtxfee is set very high! Fees this large could be paid on a single transaction."
+  ]
+}
+# 尝试
+bitcoin-cli settxfee 10
+true
+
+
+# 参考
+如何接入比特币网络以及原理分析
+https://github.com/joepeak/btcdecode/blob/master/start/setup03.md
+-maxtxfee  参数表示了在单个钱包的交易或原始交易中使用的最高总费用。如果设置过小，可能会中止大型交易。这个值不能小于最小中继交易费用。
+比特币核心总是利用参数-maxtxfee=<x>将封顶费用设置在x（默认值：0.10）BTC。 并且，比特币核心不会创建小于当前最小交易费的交易。 最后，用户可以通过参数-mintxfee=<i>为所有的交易设置最小交易费，默认值是1000satoshis/kB。
+-maxtxfee=<amt>
+       Maximum total fees (in BTC) to use in a single wallet transaction or raw
+       transaction; setting this too low may abort large transactions
+       (default: 0.10)
+-maxtxfee = <AMT>
+      在单个钱包交易或原始交易中使用的最大总费用（以BTC计）
+      交易;将此设置得太低可能会中止大型事务
+      （默认值：0.10）
+1）-disablewallet：禁用钱包功能（默认为false，即打开钱包功能）。在运行时设置了-disablewallet参数，我们的钱包功能将被关闭，将不会加载钱包，同时禁用钱包的RPC调用，程序也将返回，并停止运行。
+2）-blocksonly：只以区块模式运行（比特币客户端以调试状态启动时才会使用。就是节点不接收临时的交易，只接受已确认的区块）。默认为false，即默认不会只以区块模式运行，因为如果在区块模式下运行，全网的交易将不会被打包，钱包的交易广播功能将失效。
+3）-salvagewallet：该参数的功能为试图在比特币客户端启动时从损坏的钱包中恢复私钥。该参数只有用-rescan参数启动客户端的情况下才能生效。
+4）-zapwallettxes：参数用于删除钱包的所有交易记录，且只有用-rescan参数启动客户端才能重新取回交易记录，且只有用-rescan参数启动客户端才能重新取回交易记录。
+5）-sysperms：这个前面已经提到过了，在这里是该参数不能和钱包功能开启状态同时出现，会冲突，导致程序退出。
+6）-prune与-rescan：使用-rescan参数启动时，是不能用-prune参数的，否则二者将会冲突，程序自动退出。
+7）-minRelayTxFee：（参考前面的（20））此处用法是：防止用户设置的最低手续费高于比特币程序中设置的最高手续费（0.01个比特币），导致手续费过高，影响比特币网络的正常运转。
+8）-mintxfee：最低手续费不应高于最高手续费，否则程序将给出警告提示。
+9）-fallbackfee：当交易池中没有足够数据支撑手续费的估算时，就使用-fallbackFee作为较低最低收取费。
+10）-paytxfee与-maxtxfee：分别是支付交易手续费与最高交易手续费。此处判断，若低于支付交易手续费则程序退出；若高于最高交易手续费，则警告超出了最高手续费。
+11）-txconfirmtarget：比特币的每一笔交易都需要经过n（默认为6）次区块确认才能算真正的交易成功了，且不能回退。
+12）-spendzeroconfchange：表示比特币客户端是否可以花费0确认的费用（默认true）。
+13）-walletrbf：它可以为钱包产生的所有新交易添加交易费，具体是指BIP125可选费用替代法（RBF）。这一功能可为先前未确认的交易添加手续费，以加大交易被确认的机会。默认是关闭的，如果想开启用在客户端用bitcoind -walletrbf命令。
+
+https://chainquery.com/bitcoin-cli/sendrawtransaction
+sendrawtransaction "hexstring" ( maxfeerate )
+Arguments:
+1. hexstring     (string, required) The hex string of the raw transaction
+2. maxfeerate    (numeric or string, optional, default="0.10") Reject transactions whose fee rate is higher than the specified value, expressed in BTC/kvB.
+                 Set to 0 to accept any fee rate.
+# 正确
+bitcoin-cli sendrawtransaction 02000000000101b016738e22f48988fae985ad13422d82382a50a93144bbc6069ef5f7ddc346b90000000000fdffffff030084d71700000000160014d54a5f05aa1b1f9bd813f57c14e609772d834337800c491100000000160014d1292439ad9aadd100d1dbc4e646d05ed7cc459748368b000000000016001424535fb806ae847293a5da822bfbd814f4c9750c02473044022062bc00a2b5a1d27b322cc9cfa03f54473ef7b2e9c5492d6cc63e475c172c264c0220164afc778c30a5c60ee4546c23ee882aa4fc31ff7bc937c271f2e7d3c12704e5012103924e3bdc1acd839de687093794c36454396fdd4e70a50c2e32dc005a4f61e7ff00000000 0 
+40d9d494958a3598da62b24bf03611f90ee00f2a74fdce45a5964d2b9623e463
+
+# gettransaction
+bitcoin-cli -rpcwallet=walletname0430 gettransaction 40d9d494958a3598da62b24bf03611f90ee00f2a74fdce45a5964d2b9623e463
+```json
+{
+  "amount": 0.00000000,
+  "fee": -43.00876600,
+  "confirmations": 0,
+  "trusted": true,
+  "txid": "40d9d494958a3598da62b24bf03611f90ee00f2a74fdce45a5964d2b9623e463",
+  "wtxid": "d82dbd3afb6be74508912e2e0e520d5a238a46f6659edcd7777e86361f28011b",
+  "walletconflicts": [
+  ],
+  "time": 1714556496,
+  "timereceived": 1714556496,
+  "bip125-replaceable": "yes",
+  "details": [
+    {
+      "address": "bcrt1q64997pd2rv0ehkqn747pfesfwukcxsehyj4e26",
+      "category": "send",
+      "amount": -4.00000000,
+      "label": "",
+      "vout": 0,
+      "fee": -43.00876600,
+      "abandoned": false
+    },
+    {
+      "address": "bcrt1q6y5jgwddn2kazqx3m0zwv3kstmtuc3vhj7eeec",
+      "category": "send",
+      "amount": -2.90000000,
+      "label": "",
+      "vout": 1,
+      "fee": -43.00876600,
+      "abandoned": false
+    },
+    {
+      "address": "bcrt1qy3f4lwqx46z89ya9m2pzh77czn6vjagvwdkjc8",
+      "category": "send",
+      "amount": -0.09123400,
+      "label": "",
+      "vout": 2,
+      "fee": -43.00876600,
+      "abandoned": false
+    },
+    {
+      "address": "bcrt1q64997pd2rv0ehkqn747pfesfwukcxsehyj4e26",
+      "parent_descs": [
+        "wpkh(tpubD6NzVbkrYhZ4YYcQfvUQ64Pw7dC6CVwCBAt5a39mvFRc5BDdPo9BvQhjXg7HULu1JbWtzMuPJhu1krvR2t3c6a2ikscsWeqjom1MXy89FGY/84'/1'/0'/0/*)#5z0esfzc"
+      ],
+      "category": "receive",
+      "amount": 4.00000000,
+      "label": "",
+      "vout": 0
+    },
+    {
+      "address": "bcrt1q6y5jgwddn2kazqx3m0zwv3kstmtuc3vhj7eeec",
+      "parent_descs": [
+        "wpkh(tpubD6NzVbkrYhZ4YYcQfvUQ64Pw7dC6CVwCBAt5a39mvFRc5BDdPo9BvQhjXg7HULu1JbWtzMuPJhu1krvR2t3c6a2ikscsWeqjom1MXy89FGY/84'/1'/0'/0/*)#5z0esfzc"
+      ],
+      "category": "receive",
+      "amount": 2.90000000,
+      "label": "",
+      "vout": 1
+    },
+    {
+      "address": "bcrt1qy3f4lwqx46z89ya9m2pzh77czn6vjagvwdkjc8",
+      "parent_descs": [
+        "wpkh(tpubD6NzVbkrYhZ4YYcQfvUQ64Pw7dC6CVwCBAt5a39mvFRc5BDdPo9BvQhjXg7HULu1JbWtzMuPJhu1krvR2t3c6a2ikscsWeqjom1MXy89FGY/84'/1'/0'/0/*)#5z0esfzc"
+      ],
+      "category": "receive",
+      "amount": 0.09123400,
+      "label": "",
+      "vout": 2
+    }
+  ],
+  "hex": "02000000000101b016738e22f48988fae985ad13422d82382a50a93144bbc6069ef5f7ddc346b90000000000fdffffff030084d71700000000160014d54a5f05aa1b1f9bd813f57c14e609772d834337800c491100000000160014d1292439ad9aadd100d1dbc4e646d05ed7cc459748368b000000000016001424535fb806ae847293a5da822bfbd814f4c9750c02473044022062bc00a2b5a1d27b322cc9cfa03f54473ef7b2e9c5492d6cc63e475c172c264c0220164afc778c30a5c60ee4546c23ee882aa4fc31ff7bc937c271f2e7d3c12704e5012103924e3bdc1acd839de687093794c36454396fdd4e70a50c2e32dc005a4f61e7ff00000000"
+}
+```
+
+
+
