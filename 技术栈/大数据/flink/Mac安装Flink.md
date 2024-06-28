@@ -1,9 +1,9 @@
-Flink Mac本地安装、运行
-https://blog.csdn.net/smile0198/article/details/114011350
-brew install apache-flink
+    Flink Mac本地安装、运行
+    https://blog.csdn.net/smile0198/article/details/114011350
+    brew install apache-flink
 
-MacOS安装Apache Flink
-https://iyichen.xyz/2020/12/mac-install-apache-flink/
+    MacOS安装Apache Flink
+    https://iyichen.xyz/2020/12/mac-install-apache-flink/
 
 
 # brew install apache-flink
@@ -59,24 +59,24 @@ http://localhost:8081/
 # nc -lk 9999
 
 # run 
-/usr/local/Cellar/apache-flink/1.19.0/libexec/bin/flink run /Users/lhqer/MY/2024/idea/flink01/target/flink01-1.0-SNAPSHOT.jar
-./libexec/bin/flink run   /Users/lhqer/MY/2024/idea/flink01/target/flink01-1.0-SNAPSHOT.jar
+    /usr/local/Cellar/apache-flink/1.19.0/libexec/bin/flink run /Users/lhqer/MY/2024/idea/flink01/target/flink01-1.0-SNAPSHOT.jar
+    ./libexec/bin/flink run   /Users/lhqer/MY/2024/idea/flink01/target/flink01-1.0-SNAPSHOT.jar
 
 # RuntimeException
-Caused by: java.lang.RuntimeException: Record has Long.MIN_VALUE timestamp (= no timestamp marker). Is the time characteristic set to 'ProcessingTime', or did you forget to call 'DataStream.assignTimestampsAndWatermarks(...)'?
-查看代码是使用 ProcessingTime还是 EventTime进行业务处理， 如果是使用的事件时间进行处理的业务，则应该指定相应的事件时间和watermark
+    Caused by: java.lang.RuntimeException: Record has Long.MIN_VALUE timestamp (= no timestamp marker). Is the time characteristic set to 'ProcessingTime', or did you forget to call 'DataStream.assignTimestampsAndWatermarks(...)'?
+    查看代码是使用 ProcessingTime还是 EventTime进行业务处理， 如果是使用的事件时间进行处理的业务，则应该指定相应的事件时间和watermark
 
-.window(TumblingEventTimeWindows.of(Time.seconds(8))) //添加滚动窗口 ，采用事件时间进行处理
-.window(SlidingProcessingTimeWindows.of(Time.seconds(10),Time.seconds(5))) //添加滑动窗口，采用处理时间进行处理
+    .window(TumblingEventTimeWindows.of(Time.seconds(8))) //添加滚动窗口 ，采用事件时间进行处理
+    .window(SlidingProcessingTimeWindows.of(Time.seconds(10),Time.seconds(5))) //添加滑动窗口，采用处理时间进行处理
 # run
-./libexec/bin/flink run   /Users/lhqer/MY/2024/idea/flink01/target/flink01-1.0-SNAPSHOT.jar
-Job has been submitted with JobID ba4f5f3d5fd1cc414ec6a51c2e19c970
+    ./libexec/bin/flink run   /Users/lhqer/MY/2024/idea/flink01/target/flink01-1.0-SNAPSHOT.jar
+    Job has been submitted with JobID ba4f5f3d5fd1cc414ec6a51c2e19c970
 
 # tail
-cd /usr/local/Cellar/apache-flink/1.19.0
-ls ./libexec/log/
-tail -100f libexec/log/flink-lhqer-taskexecutor-0-lhqer.out
-tail -100f ./libexec/log/flink-lhqer-taskexecutor-0-7RP-OFFB-Lhqer.local.out
+    cd /usr/local/Cellar/apache-flink/1.19.0
+    ls ./libexec/log/
+    tail -100f libexec/log/flink-lhqer-taskexecutor-0-lhqer.out
+    tail -100f ./libexec/log/flink-lhqer-taskexecutor-0-7RP-OFFB-Lhqer.local.out
 
 
 
