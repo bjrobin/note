@@ -5,7 +5,20 @@ def generate_html_links(directory):
     print("<pre>")
     
     # 遍历目录和子目录
-    for root, _, files in os.walk(directory):
+    for root, dirs, files in os.walk(directory):
+        # 忽略 .git 文件夹
+        if '.git' in dirs:
+            dirs.remove('.git')
+
+        # 输出目录名，添加链接和特殊样式
+        relative_root = os.path.relpath(root, directory)
+        if relative_root != '.':
+            depth = relative_root.count(os.sep)
+            indent = "    " * depth
+            # 生成文件夹的 href 链接
+            folder_link = os.path.relpath(root, directory)
+            print(f'{indent}<a href="{folder_link}"><strong>{os.path.basename(root)}</strong></a>/')
+            
         for file in files:
             # 如果文件是 .md 扩展名
             if file.endswith(".md"):
