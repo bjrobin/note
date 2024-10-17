@@ -17,7 +17,7 @@ def generate_html_links(directory):
             indent = "    " * depth
             # 生成文件夹的 href 链接
             folder_link = os.path.relpath(root, directory)
-            print(f'{indent}<a href="{folder_link}"><strong>{os.path.basename(root)}</strong></a>/')
+            print(f'{indent}<strong>{os.path.basename(root)}</strong>/')
             
         for file in files:
             # 如果文件是 .md 扩展名
