@@ -9,7 +9,7 @@ https://www.dinky.org.cn/docs/next/get_started/quick_experience/
 
 
 
-docker run --restart=always -p 8888:8888 --name dinky dinkydocker/dinky-standalone-server:1.0.3-flink1.17
+docker run -d --restart=always -p 8888:8888 --name dinky dinkydocker/dinky-standalone-server:1.0.3-flink1.17
 
 
 	Application 'Dinky' is running! Access URLs:
