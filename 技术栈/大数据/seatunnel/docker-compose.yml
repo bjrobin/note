@@ -1,0 +1,17 @@
+services:
+  zeta-server:
+    image: my-base-image:latest
+    container_name: zeta-server
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    ports:
+      - "8801:8801"
+      - "5801:5801"
+    command: >
+      bash -c "
+      printenv JAVA_HOME &&
+      printenv PATH &&
+      echo 'Java version:' && /usr/local/java/jdk/bin/java -version &&
+      tail -f /dev/null
+      "
