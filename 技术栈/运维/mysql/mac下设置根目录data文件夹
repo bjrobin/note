@@ -1,0 +1,11 @@
+mac下设置根目录data文件夹
+1、进入/System/Volumes/Data并创建data文件夹
+
+cd /System/Volumes/Data
+sudo mkdir data
+sudo chmod -R 777 data
+2、打开synthetic.conf并写入以下内容，注意data和/System/Volumes/Data/data之间是tab不是空格
+
+sudo vim /etc/synthetic.conf
+data  /System/Volumes/Data/data
+3、重启电脑，根目录下会出现data，操作data目录即可
