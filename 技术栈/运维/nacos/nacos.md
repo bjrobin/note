@@ -48,6 +48,9 @@ docker run \
 -e MYSQL_SERVICE_PASSWORD=12345678 \
 nacos/nacos-server:latest
 
+# 访问
+http://127.0.0.1:8848/nacos
+
 # 参考
 ## 单机模式部署
 https://nacos.io/docs/latest/manual/admin/deployment/deployment-standalone/?spm=5238cd80.72a042d5.0.0.5bc0cd36v1N8N2
