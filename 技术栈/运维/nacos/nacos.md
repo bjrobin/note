@@ -46,12 +46,18 @@ docker run \
 -e MYSQL_SERVICE_DB_NAME=nacos_config \
 -e MYSQL_SERVICE_USER=root \
 -e MYSQL_SERVICE_PASSWORD=12345678 \
+-e MYSQL_SERVICE_DB_PARAM="allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC" \
+-e NACOS_AUTH_ENABLE=true \
+-e NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789 \
+-e NACOS_AUTH_USER_AGENT_AUTH_WHITE_ENABLE=true \
 nacos/nacos-server:latest
 
 # 访问
 http://127.0.0.1:8848/nacos
+第一次访问时设置用户名密码
 
 # 参考
 ## 单机模式部署
 https://nacos.io/docs/latest/manual/admin/deployment/deployment-standalone/?spm=5238cd80.72a042d5.0.0.5bc0cd36v1N8N2
-
+## Nacos 系统参数介绍
+https://nacos.io/docs/latest/manual/admin/system-configurations/?spm=5238cd80.674e7612.0.0.4cb43b83CDvBSy#2-%E9%95%9C%E5%83%8F%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F
